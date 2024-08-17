@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppChineseMapper">
+    
+    <resultMap type="AppChinese" id="AppChineseResult">
+        <result property="id"    column="id"    />
+        <result property="grade"    column="grade"    />
+        <result property="term"    column="term"    />
+        <result property="unit"    column="unit"    />
+        <result property="lessonNo"    column="lesson_no"    />
+        <result property="word"    column="word"    />
+        <result property="mean"    column="mean"    />
+        <result property="pinyin"    column="pinyin"    />
+        <result property="wordType"    column="word_type"    />
+        <result property="wordSort"    column="word_sort"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectAppChineseVo">
+        select id, grade, term, unit, lesson_no, word, mean, pinyin, word_type, word_sort, create_by, create_time, update_by, update_time, remark from app_chinese
+    </sql>
+
+    <select id="selectAppChineseList" parameterType="AppChinese" resultMap="AppChineseResult">
+        <include refid="selectAppChineseVo"/>
+        <where>  
+            <if test="grade != null "> and grade = #{grade}</if>
+            <if test="term != null "> and term = #{term}</if>
+            <if test="unit != null "> and unit = #{unit}</if>
+            <if test="lessonNo != null "> and lesson_no = #{lessonNo}</if>
+            <if test="word != null  and word != ''"> and word like concat('%', #{word}, '%')</if>
+            <if test="mean != null  and mean != ''"> and mean like concat('%', #{mean}, '%')</if>
+            <if test="pinyin != null  and pinyin != ''"> and pinyin like concat('%', #{pinyin}, '%')</if>
+            <if test="wordType != null "> and word_type = #{wordType}</if>
+            <if test="wordSort != null "> and word_sort = #{wordSort}</if>
+            <if test="remark != null  and remark != ''"> and remark like concat('%', #{remark}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectAppChineseById" parameterType="Integer" resultMap="AppChineseResult">
+        <include refid="selectAppChineseVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAppChinese" parameterType="AppChinese" useGeneratedKeys="true" keyProperty="id">
+        insert into app_chinese
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="grade != null">grade,</if>
+            <if test="term != null">term,</if>
+            <if test="unit != null">unit,</if>
+            <if test="lessonNo != null">lesson_no,</if>
+            <if test="word != null and word != ''">word,</if>
+            <if test="mean != null">mean,</if>
+            <if test="pinyin != null">pinyin,</if>
+            <if test="wordType != null">word_type,</if>
+            <if test="wordSort != null">word_sort,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="grade != null">#{grade},</if>
+            <if test="term != null">#{term},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="lessonNo != null">#{lessonNo},</if>
+            <if test="word != null and word != ''">#{word},</if>
+            <if test="mean != null">#{mean},</if>
+            <if test="pinyin != null">#{pinyin},</if>
+            <if test="wordType != null">#{wordType},</if>
+            <if test="wordSort != null">#{wordSort},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppChinese" parameterType="AppChinese">
+        update app_chinese
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="grade != null">grade = #{grade},</if>
+            <if test="term != null">term = #{term},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="lessonNo != null">lesson_no = #{lessonNo},</if>
+            <if test="word != null and word != ''">word = #{word},</if>
+            <if test="mean != null">mean = #{mean},</if>
+            <if test="pinyin != null">pinyin = #{pinyin},</if>
+            <if test="wordType != null">word_type = #{wordType},</if>
+            <if test="wordSort != null">word_sort = #{wordSort},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppChineseById" parameterType="Integer">
+        delete from app_chinese where id = #{id}
+    </delete>
+
+    <delete id="deleteAppChineseByIds" parameterType="String">
+        delete from app_chinese where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

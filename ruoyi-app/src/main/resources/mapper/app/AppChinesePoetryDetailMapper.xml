@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppChinesePoetryDetailMapper">
+    
+    <resultMap type="AppChinesePoetryDetail" id="AppChinesePoetryDetailResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="titleWord"    column="title_word"    />
+        <result property="titleWordMean"    column="title_word_mean"    />
+        <result property="titlePinyinWord"    column="title_pinyin_word"    />
+        <result property="grade"    column="grade"    />
+        <result property="term"    column="term"    />
+        <result property="unit"    column="unit"    />
+        <result property="author"    column="author"    />
+        <result property="dynasty"    column="dynasty"    />
+        <result property="sentense"    column="sentense"    />
+        <result property="pinyin"    column="pinyin"    />
+        <result property="mean"    column="mean"    />
+        <result property="word"    column="word"    />
+        <result property="wordMean"    column="word_mean"    />
+        <result property="pinyinWord"    column="pinyin_word"    />
+        <result property="truth"    column="truth"    />
+        <result property="question"    column="question"    />
+        <result property="isVip"    column="is_vip"    />
+        <result property="innerSortNo"    column="inner_sort_no"    />
+        <result property="categoryId"    column="category_id"    />
+        <result property="childCategoryId"    column="child_category_id"    />
+    </resultMap>
+
+    <sql id="selectAppChinesePoetryDetailVo">
+        select id, name, title_word, title_word_mean, title_pinyin_word, grade, term, unit, author, dynasty, sentense, pinyin, mean, word, word_mean, pinyin_word, truth, question, is_vip, inner_sort_no, category_id, child_category_id from app_chinese_poetry_detail
+    </sql>
+
+    <select id="selectAppChinesePoetryDetailList" parameterType="AppChinesePoetryDetail" resultMap="AppChinesePoetryDetailResult">
+        <include refid="selectAppChinesePoetryDetailVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="titleWordMean != null  and titleWordMean != ''"> and title_word_mean = #{titleWordMean}</if>
+            <if test="grade != null "> and grade = #{grade}</if>
+            <if test="term != null "> and term = #{term}</if>
+            <if test="unit != null "> and unit = #{unit}</if>
+            <if test="author != null  and author != ''"> and author like concat('%', #{author}, '%')</if>
+            <if test="dynasty != null  and dynasty != ''"> and dynasty like concat('%', #{dynasty}, '%')</if>
+            <if test="sentense != null  and sentense != ''"> and sentense like concat('%', #{sentense}, '%')</if>
+            <if test="pinyin != null  and pinyin != ''"> and pinyin like concat('%', #{pinyin}, '%')</if>
+            <if test="mean != null  and mean != ''"> and mean like concat('%', #{mean}, '%')</if>
+            <if test="wordMean != null  and wordMean != ''"> and word_mean like concat('%', #{wordMean}, '%')</if>
+            <if test="categoryId != null "> and category_id = #{categoryId}</if>
+        </where>
+    </select>
+    
+    <select id="selectAppChinesePoetryDetailById" parameterType="Long" resultMap="AppChinesePoetryDetailResult">
+        <include refid="selectAppChinesePoetryDetailVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAppChinesePoetryDetail" parameterType="AppChinesePoetryDetail" useGeneratedKeys="true" keyProperty="id">
+        insert into app_chinese_poetry_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="titleWord != null">title_word,</if>
+            <if test="titleWordMean != null">title_word_mean,</if>
+            <if test="titlePinyinWord != null">title_pinyin_word,</if>
+            <if test="grade != null">grade,</if>
+            <if test="term != null">term,</if>
+            <if test="unit != null">unit,</if>
+            <if test="author != null">author,</if>
+            <if test="dynasty != null">dynasty,</if>
+            <if test="sentense != null">sentense,</if>
+            <if test="pinyin != null">pinyin,</if>
+            <if test="mean != null">mean,</if>
+            <if test="word != null">word,</if>
+            <if test="wordMean != null">word_mean,</if>
+            <if test="pinyinWord != null">pinyin_word,</if>
+            <if test="truth != null">truth,</if>
+            <if test="question != null">question,</if>
+            <if test="isVip != null">is_vip,</if>
+            <if test="innerSortNo != null">inner_sort_no,</if>
+            <if test="categoryId != null">category_id,</if>
+            <if test="childCategoryId != null">child_category_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="titleWord != null">#{titleWord},</if>
+            <if test="titleWordMean != null">#{titleWordMean},</if>
+            <if test="titlePinyinWord != null">#{titlePinyinWord},</if>
+            <if test="grade != null">#{grade},</if>
+            <if test="term != null">#{term},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="author != null">#{author},</if>
+            <if test="dynasty != null">#{dynasty},</if>
+            <if test="sentense != null">#{sentense},</if>
+            <if test="pinyin != null">#{pinyin},</if>
+            <if test="mean != null">#{mean},</if>
+            <if test="word != null">#{word},</if>
+            <if test="wordMean != null">#{wordMean},</if>
+            <if test="pinyinWord != null">#{pinyinWord},</if>
+            <if test="truth != null">#{truth},</if>
+            <if test="question != null">#{question},</if>
+            <if test="isVip != null">#{isVip},</if>
+            <if test="innerSortNo != null">#{innerSortNo},</if>
+            <if test="categoryId != null">#{categoryId},</if>
+            <if test="childCategoryId != null">#{childCategoryId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppChinesePoetryDetail" parameterType="AppChinesePoetryDetail">
+        update app_chinese_poetry_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="titleWord != null">title_word = #{titleWord},</if>
+            <if test="titleWordMean != null">title_word_mean = #{titleWordMean},</if>
+            <if test="titlePinyinWord != null">title_pinyin_word = #{titlePinyinWord},</if>
+            <if test="grade != null">grade = #{grade},</if>
+            <if test="term != null">term = #{term},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="author != null">author = #{author},</if>
+            <if test="dynasty != null">dynasty = #{dynasty},</if>
+            <if test="sentense != null">sentense = #{sentense},</if>
+            <if test="pinyin != null">pinyin = #{pinyin},</if>
+            <if test="mean != null">mean = #{mean},</if>
+            <if test="word != null">word = #{word},</if>
+            <if test="wordMean != null">word_mean = #{wordMean},</if>
+            <if test="pinyinWord != null">pinyin_word = #{pinyinWord},</if>
+            <if test="truth != null">truth = #{truth},</if>
+            <if test="question != null">question = #{question},</if>
+            <if test="isVip != null">is_vip = #{isVip},</if>
+            <if test="innerSortNo != null">inner_sort_no = #{innerSortNo},</if>
+            <if test="categoryId != null">category_id = #{categoryId},</if>
+            <if test="childCategoryId != null">child_category_id = #{childCategoryId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppChinesePoetryDetailById" parameterType="Long">
+        delete from app_chinese_poetry_detail where id = #{id}
+    </delete>
+
+    <delete id="deleteAppChinesePoetryDetailByIds" parameterType="String">
+        delete from app_chinese_poetry_detail where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

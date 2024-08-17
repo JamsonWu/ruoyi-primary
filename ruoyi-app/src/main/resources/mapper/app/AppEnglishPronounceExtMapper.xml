@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppEnglishPronounceExtMapper">
+    
+    <resultMap type="AppEnglishPronounce" id="AppEnglishPronounceResult">
+        <result property="id"    column="id"    />
+        <result property="word"    column="word"    />
+        <result property="pronounce"    column="pronounce"    />
+        <result property="chinese"    column="chinese"    />
+        <result property="wordType"    column="word_type"    />
+        <result property="sortNo"    column="sort_no"    />
+    </resultMap>
+
+    <sql id="selectAppEnglishPronounceVo">
+        select id, word, pronounce, chinese, word_type, sort_no from app_english_pronounce
+    </sql>
+
+    <select id="selectAppEnglishPronounceByWord" parameterType="String" resultMap="AppEnglishPronounceResult">
+        <include refid="selectAppEnglishPronounceVo"/>
+        where word = #{word}
+    </select>
+
+</mapper>

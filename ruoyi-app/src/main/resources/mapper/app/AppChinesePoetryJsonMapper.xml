@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppChinesePoetryJsonMapper">
+    
+    <resultMap type="AppChinesePoetryJson" id="AppChinesePoetryJsonResult">
+        <result property="id"    column="id"    />
+        <result property="sysId"    column="sys_id"    />
+        <result property="grade"    column="grade"    />
+        <result property="term"    column="term"    />
+        <result property="unit"    column="unit"    />
+        <result property="title"    column="title"    />
+        <result property="categoryId"    column="category_id"    />
+        <result property="jsonData"    column="json_data"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="mustWrite"    column="must_write"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectAppChinesePoetryJsonVo">
+        select id, sys_id, grade, term, unit, title, category_id, json_data, create_by, create_time, update_by, must_write, update_time, remark from app_chinese_poetry_json
+    </sql>
+
+    <select id="selectAppChinesePoetryJsonList" parameterType="AppChinesePoetryJson" resultMap="AppChinesePoetryJsonResult">
+        <include refid="selectAppChinesePoetryJsonVo"/>
+        <where>  
+            <if test="sysId != null "> and sys_id = #{sysId}</if>
+            <if test="grade != null "> and grade = #{grade}</if>
+            <if test="term != null "> and term = #{term}</if>
+            <if test="unit != null "> and unit = #{unit}</if>
+            <if test="title != null  and title != ''"> and title like concat('%', #{title}, '%')</if>
+            <if test="categoryId != null  and categoryId != ''"> and category_id = #{categoryId}</if>
+            <if test="jsonData != null  and jsonData != ''"> and json_data like concat('%', #{jsonData}, '%')</if>
+            <if test="mustWrite != null "> and must_write = #{mustWrite}</if>
+            <if test="remark != null  and remark != ''"> and remark like concat('%', #{remark}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectAppChinesePoetryJsonById" parameterType="Long" resultMap="AppChinesePoetryJsonResult">
+        <include refid="selectAppChinesePoetryJsonVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAppChinesePoetryJson" parameterType="AppChinesePoetryJson" useGeneratedKeys="true" keyProperty="id">
+        insert into app_chinese_poetry_json
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sysId != null">sys_id,</if>
+            <if test="grade != null">grade,</if>
+            <if test="term != null">term,</if>
+            <if test="unit != null">unit,</if>
+            <if test="title != null and title != ''">title,</if>
+            <if test="categoryId != null and categoryId != ''">category_id,</if>
+            <if test="jsonData != null and jsonData != ''">json_data,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="mustWrite != null">must_write,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sysId != null">#{sysId},</if>
+            <if test="grade != null">#{grade},</if>
+            <if test="term != null">#{term},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="title != null and title != ''">#{title},</if>
+            <if test="categoryId != null and categoryId != ''">#{categoryId},</if>
+            <if test="jsonData != null and jsonData != ''">#{jsonData},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="mustWrite != null">#{mustWrite},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppChinesePoetryJson" parameterType="AppChinesePoetryJson">
+        update app_chinese_poetry_json
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sysId != null">sys_id = #{sysId},</if>
+            <if test="grade != null">grade = #{grade},</if>
+            <if test="term != null">term = #{term},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="title != null and title != ''">title = #{title},</if>
+            <if test="categoryId != null and categoryId != ''">category_id = #{categoryId},</if>
+            <if test="jsonData != null and jsonData != ''">json_data = #{jsonData},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="mustWrite != null">must_write = #{mustWrite},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppChinesePoetryJsonById" parameterType="Long">
+        delete from app_chinese_poetry_json where id = #{id}
+    </delete>
+
+    <delete id="deleteAppChinesePoetryJsonByIds" parameterType="String">
+        delete from app_chinese_poetry_json where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppChineseExtMapper">
+    
+    <resultMap type="AppChinese" id="AppChineseResult">
+        <result property="id"    column="id"    />
+        <result property="grade"    column="grade"    />
+        <result property="term"    column="term"    />
+        <result property="unit"    column="unit"    />
+        <result property="lessonNo"    column="lesson_no"    />
+        <result property="word"    column="word"    />
+        <result property="mean"    column="mean"    />
+        <result property="pinyin"    column="pinyin"    />
+        <result property="wordType"    column="word_type"    />
+        <result property="wordSort"    column="word_sort"    />
+    </resultMap>
+
+    <sql id="selectAppChineseVo">
+        select id, grade, term, unit, lesson_no, word, mean, pinyin, word_type, word_sort from app_chinese
+    </sql>
+
+    <select id="selectAppChineseByWord" parameterType="String" resultMap="AppChineseResult">
+        <include refid="selectAppChineseVo"/>
+        where word = #{word}
+    </select>
+
+</mapper>

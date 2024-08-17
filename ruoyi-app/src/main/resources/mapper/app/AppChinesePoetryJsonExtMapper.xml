@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppChinesePoetryJsonExtMapper">
+
+    <select id="selectAppChinesePoetryJsonBySysId" parameterType="Long" resultMap="com.ruoyi.app.mapper.AppChinesePoetryJsonMapper.AppChinesePoetryJsonResult">
+        <include refid="com.ruoyi.app.mapper.AppChinesePoetryJsonMapper.selectAppChinesePoetryJsonVo"/>
+        where sys_id = #{sysId}
+    </select>
+
+    <delete id="deleteAppChinesePoetryBySysId" parameterType="Long">
+        delete from app_chinese_poetry where sys_id = #{sysId}
+    </delete>
+    <delete id="deleteAppChinesePoetryAccumBySysId" parameterType="Long">
+        delete from app_chinese_poetry_accum where sys_id = #{sysId}
+    </delete>
+    <delete id="deleteAppChinesePoetryAccumDetailBySysId" parameterType="Long">
+        delete from app_chinese_poetry_accum_detail where p_sys_id = #{sysId}
+    </delete>
+    <delete id="deleteAppChinesePoetryJsonBySysId" parameterType="Long">
+        delete from app_chinese_poetry_json where sys_id = #{sysId}
+    </delete>
+</mapper>

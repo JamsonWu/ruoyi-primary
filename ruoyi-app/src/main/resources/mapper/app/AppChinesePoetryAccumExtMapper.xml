@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppChinesePoetryAccumExtMapper">
+    
+    <resultMap type="AppChinesePoetryAccum" id="AppChinesePoetryAccumResultExt" extends="com.ruoyi.app.mapper.AppChinesePoetryAccumMapper.AppChinesePoetryAccumResult">
+
+    </resultMap>
+
+    <select id="selectAppChinesePoetryAccumListBySysId" resultMap="AppChinesePoetryAccumResultExt">
+        <include refid="com.ruoyi.app.mapper.AppChinesePoetryAccumMapper.selectAppChinesePoetryAccumVo"/>
+        where sys_id in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        order by sys_id
+    </select>
+
+    <!-- 日积月累需要查明细表的声明-->
+    <resultMap type="AppChinesePoetryExt" id="AppChinesePoetryExtResult">
+        <result property="id"    column="id"    />
+        <result property="sysId"    column="sys_id"    />
+        <result property="grade"    column="grade"    />
+        <result property="term"    column="term"    />
+        <result property="unit"    column="unit"    />
+        <result property="categoryId"    column="category_id"    />
+        <result property="title"    column="title"    />
+        <result property="dynasty"    column="dynasty"    />
+        <result property="author"    column="author"    />
+        <result property="content"    column="sentense"    />
+        <result property="mustWrite"    column="must_write"    />
+        <result property="pinyin"    column="pinyin"    />
+        <result property="comment"    column="word_mean"    />
+        <result property="translation"    column="mean"    />
+        <result property="childCategoryId"    column="child_category_id"    />
+        <result property="emotion"    column="emotion"    />
+        <result property="truth"    column="truth"    />
+        <result property="wordSearch"    column="word_search"    />
+        <result property="question"    column="question"    />
+        <result property="remark"    column="remark"    />
+        <result property="childId"    column="child_id"    />
+        <result property="isVip"    column="is_vip"    />
+    </resultMap>
+
+
+    <select id="selectAppChinesePoetryListByAccumDetail" parameterType="AppChinesePoetryExt" resultMap="AppChinesePoetryExtResult">
+        select
+            sys_id, grade, term, unit, title, author,
+            dynasty, title_pinyin, title_word, must_write,
+            title_word_mean, title_word_pinyin, emotion,
+            category_id, child_category_id, b.id, sentense,
+            pinyin, mean, word, word_mean, word_pinyin,
+            truth, question, is_vip, inner_sort_no,
+            b.word_search, b.remark,
+            b.id as child_id
+        from app_chinese_poetry_accum a
+        join app_chinese_poetry_accum_detail b
+        on a.sys_id = b.p_sys_id
+        <where>
+            <if test="grade != null "> and grade = #{grade}</if>
+            <if test="term != null "> and term = #{term}</if>
+            <if test="unit != null "> and unit = #{unit}</if>
+            <if test="categoryId != null  and categoryId != ''"> and category_id = #{categoryId}</if>
+            <if test="title != null  and title != ''"> and title like concat('%', #{title}, '%')</if>
+            <if test="dynasty != null  and dynasty != ''"> and dynasty like concat('%', #{dynasty}, '%')</if>
+            <if test="author != null  and author != ''"> and author like concat('%', #{author}, '%')</if>
+            <if test="content != null  and content != ''"> and sentense like concat('%', #{content}, '%')</if>
+            <if test="mustWrite != null "> and must_write = #{mustWrite}</if>
+            <if test="pinyin != null  and pinyin != ''"> and pinyin like concat('%', #{pinyin}, '%')</if>
+            <if test="comment != null  and comment != ''"> and word_mean like concat('%', #{comment}, '%')</if>
+            <if test="translation != null  and translation != ''"> and mean like concat('%', #{translation}, '%')</if>
+            <if test="emotion != null  and emotion != ''"> and emotion like concat('%', #{emotion}, '%')</if>
+            <if test="truth != null  and truth != ''"> and truth like concat('%', #{truth}, '%')</if>
+            <if test="wordSearch != null  and wordSearch != ''"> and word_search like concat('%', #{wordSearch}, '%')</if>
+            <if test="question != null  and question != ''"> and question like concat('%', #{question}, '%')</if>
+            <if test="isVip != null "> and is_vip = #{isVip}</if>
+        </where>
+    </select>
+
+
+    <select id="selectAppChinesePoetryAccumBySysId" parameterType="Long" resultMap="AppChinesePoetryAccumResultExt">
+        <include refid="com.ruoyi.app.mapper.AppChinesePoetryAccumMapper.selectAppChinesePoetryAccumVo"/>
+        where sys_id = #{sysId}
+    </select>
+
+</mapper>

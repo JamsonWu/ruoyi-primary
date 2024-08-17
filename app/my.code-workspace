@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "primary-knowledge"
+		},
+		{
+			"path": "primary-app"
+		},
+		{
+			"path": "../../gluestack-ui-main"
+		},
+		{
+			"path": "../ruoyi-ui-vue3"
+		},
+		{
+			"path": "../../danApp"
+		},
+		{
+			"path": "../../ui-examples-main"
+		}
+	],
+	"settings": {}
+}

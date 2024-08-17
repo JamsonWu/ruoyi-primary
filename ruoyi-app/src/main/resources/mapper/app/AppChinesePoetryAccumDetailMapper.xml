@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppChinesePoetryAccumDetailMapper">
+    
+    <resultMap type="AppChinesePoetryAccumDetail" id="AppChinesePoetryAccumDetailResult">
+        <result property="id"    column="id"    />
+        <result property="pSysId"    column="p_sys_id"    />
+        <result property="sentense"    column="sentense"    />
+        <result property="pinyin"    column="pinyin"    />
+        <result property="mean"    column="mean"    />
+        <result property="word"    column="word"    />
+        <result property="wordMean"    column="word_mean"    />
+        <result property="wordPinyin"    column="word_pinyin"    />
+        <result property="truth"    column="truth"    />
+        <result property="question"    column="question"    />
+        <result property="isVip"    column="is_vip"    />
+        <result property="innerSortNo"    column="inner_sort_no"    />
+        <result property="wordSearch"    column="word_search"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectAppChinesePoetryAccumDetailVo">
+        select id, p_sys_id, sentense, pinyin, mean, word, word_mean, word_pinyin, truth, question, is_vip, inner_sort_no, word_search, create_time, create_by, update_by, update_time, remark from app_chinese_poetry_accum_detail
+    </sql>
+
+    <select id="selectAppChinesePoetryAccumDetailList" parameterType="AppChinesePoetryAccumDetail" resultMap="AppChinesePoetryAccumDetailResult">
+        <include refid="selectAppChinesePoetryAccumDetailVo"/>
+        <where>  
+            <if test="pSysId != null "> and p_sys_id = #{pSysId}</if>
+            <if test="sentense != null  and sentense != ''"> and sentense like concat('%', #{sentense}, '%')</if>
+            <if test="pinyin != null  and pinyin != ''"> and pinyin like concat('%', #{pinyin}, '%')</if>
+            <if test="mean != null  and mean != ''"> and mean like concat('%', #{mean}, '%')</if>
+            <if test="word != null  and word != ''"> and word like concat('%', #{word}, '%')</if>
+            <if test="wordMean != null  and wordMean != ''"> and word_mean like concat('%', #{wordMean}, '%')</if>
+            <if test="wordPinyin != null  and wordPinyin != ''"> and word_pinyin like concat('%', #{wordPinyin}, '%')</if>
+            <if test="truth != null  and truth != ''"> and truth like concat('%', #{truth}, '%')</if>
+            <if test="question != null  and question != ''"> and question like concat('%', #{question}, '%')</if>
+            <if test="isVip != null "> and is_vip = #{isVip}</if>
+            <if test="innerSortNo != null "> and inner_sort_no = #{innerSortNo}</if>
+            <if test="wordSearch != null  and wordSearch != ''"> and word_search like concat('%', #{wordSearch}, '%')</if>
+            <if test="remark != null  and remark != ''"> and remark like concat('%', #{remark}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectAppChinesePoetryAccumDetailById" parameterType="Long" resultMap="AppChinesePoetryAccumDetailResult">
+        <include refid="selectAppChinesePoetryAccumDetailVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAppChinesePoetryAccumDetail" parameterType="AppChinesePoetryAccumDetail" useGeneratedKeys="true" keyProperty="id">
+        insert into app_chinese_poetry_accum_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pSysId != null">p_sys_id,</if>
+            <if test="sentense != null and sentense != ''">sentense,</if>
+            <if test="pinyin != null">pinyin,</if>
+            <if test="mean != null">mean,</if>
+            <if test="word != null">word,</if>
+            <if test="wordMean != null">word_mean,</if>
+            <if test="wordPinyin != null">word_pinyin,</if>
+            <if test="truth != null">truth,</if>
+            <if test="question != null">question,</if>
+            <if test="isVip != null">is_vip,</if>
+            <if test="innerSortNo != null">inner_sort_no,</if>
+            <if test="wordSearch != null">word_search,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pSysId != null">#{pSysId},</if>
+            <if test="sentense != null and sentense != ''">#{sentense},</if>
+            <if test="pinyin != null">#{pinyin},</if>
+            <if test="mean != null">#{mean},</if>
+            <if test="word != null">#{word},</if>
+            <if test="wordMean != null">#{wordMean},</if>
+            <if test="wordPinyin != null">#{wordPinyin},</if>
+            <if test="truth != null">#{truth},</if>
+            <if test="question != null">#{question},</if>
+            <if test="isVip != null">#{isVip},</if>
+            <if test="innerSortNo != null">#{innerSortNo},</if>
+            <if test="wordSearch != null">#{wordSearch},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppChinesePoetryAccumDetail" parameterType="AppChinesePoetryAccumDetail">
+        update app_chinese_poetry_accum_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="pSysId != null">p_sys_id = #{pSysId},</if>
+            <if test="sentense != null and sentense != ''">sentense = #{sentense},</if>
+            <if test="pinyin != null">pinyin = #{pinyin},</if>
+            <if test="mean != null">mean = #{mean},</if>
+            <if test="word != null">word = #{word},</if>
+            <if test="wordMean != null">word_mean = #{wordMean},</if>
+            <if test="wordPinyin != null">word_pinyin = #{wordPinyin},</if>
+            <if test="truth != null">truth = #{truth},</if>
+            <if test="question != null">question = #{question},</if>
+            <if test="isVip != null">is_vip = #{isVip},</if>
+            <if test="innerSortNo != null">inner_sort_no = #{innerSortNo},</if>
+            <if test="wordSearch != null">word_search = #{wordSearch},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppChinesePoetryAccumDetailById" parameterType="Long">
+        delete from app_chinese_poetry_accum_detail where id = #{id}
+    </delete>
+
+    <delete id="deleteAppChinesePoetryAccumDetailByIds" parameterType="String">
+        delete from app_chinese_poetry_accum_detail where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

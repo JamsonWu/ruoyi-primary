@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppChineseWordCommentMapper">
+    
+    <resultMap type="AppChineseWordComment" id="AppChineseWordCommentResult">
+        <result property="id"    column="id"    />
+        <result property="grade"    column="grade"    />
+        <result property="term"    column="term"    />
+        <result property="word"    column="word"    />
+        <result property="pinyin"    column="pinyin"    />
+        <result property="comment"    column="comment"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectAppChineseWordCommentVo">
+        select id, grade, term, word, pinyin, comment, create_by, create_time, update_by, update_time, remark from app_chinese_word_comment
+    </sql>
+
+    <select id="selectAppChineseWordCommentList" parameterType="AppChineseWordComment" resultMap="AppChineseWordCommentResult">
+        <include refid="selectAppChineseWordCommentVo"/>
+        <where>  
+            <if test="grade != null "> and grade = #{grade}</if>
+            <if test="term != null "> and term = #{term}</if>
+            <if test="word != null  and word != ''"> and word like concat('%', #{word}, '%')</if>
+            <if test="pinyin != null  and pinyin != ''"> and pinyin like concat('%', #{pinyin}, '%')</if>
+            <if test="comment != null  and comment != ''"> and comment like concat('%', #{comment}, '%')</if>
+            <if test="remark != null  and remark != ''"> and remark like concat('%', #{remark}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectAppChineseWordCommentById" parameterType="Long" resultMap="AppChineseWordCommentResult">
+        <include refid="selectAppChineseWordCommentVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAppChineseWordComment" parameterType="AppChineseWordComment" useGeneratedKeys="true" keyProperty="id">
+        insert into app_chinese_word_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="grade != null">grade,</if>
+            <if test="term != null">term,</if>
+            <if test="word != null">word,</if>
+            <if test="pinyin != null">pinyin,</if>
+            <if test="comment != null">comment,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="grade != null">#{grade},</if>
+            <if test="term != null">#{term},</if>
+            <if test="word != null">#{word},</if>
+            <if test="pinyin != null">#{pinyin},</if>
+            <if test="comment != null">#{comment},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppChineseWordComment" parameterType="AppChineseWordComment">
+        update app_chinese_word_comment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="grade != null">grade = #{grade},</if>
+            <if test="term != null">term = #{term},</if>
+            <if test="word != null">word = #{word},</if>
+            <if test="pinyin != null">pinyin = #{pinyin},</if>
+            <if test="comment != null">comment = #{comment},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppChineseWordCommentById" parameterType="Long">
+        delete from app_chinese_word_comment where id = #{id}
+    </delete>
+
+    <delete id="deleteAppChineseWordCommentByIds" parameterType="String">
+        delete from app_chinese_word_comment where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

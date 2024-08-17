@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppChinesePoetryMapper">
+    
+    <resultMap type="AppChinesePoetry" id="AppChinesePoetryResult">
+        <result property="id"    column="id"    />
+        <result property="sysId"    column="sys_id"    />
+        <result property="grade"    column="grade"    />
+        <result property="term"    column="term"    />
+        <result property="unit"    column="unit"    />
+        <result property="categoryId"    column="category_id"    />
+        <result property="title"    column="title"    />
+        <result property="dynasty"    column="dynasty"    />
+        <result property="author"    column="author"    />
+        <result property="content"    column="content"    />
+        <result property="mustWrite"    column="must_write"    />
+        <result property="pinyin"    column="pinyin"    />
+        <result property="comment"    column="comment"    />
+        <result property="translation"    column="translation"    />
+        <result property="childCategoryId"    column="child_category_id"    />
+        <result property="background"    column="background"    />
+        <result property="emotion"    column="emotion"    />
+        <result property="truth"    column="truth"    />
+        <result property="wordSearch"    column="word_search"    />
+        <result property="question"    column="question"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectAppChinesePoetryVo">
+        select id, sys_id, grade, term, unit, category_id, title, dynasty, author, content, must_write, pinyin, comment, translation, child_category_id, background, emotion, truth, word_search, question, create_by, create_time, update_by, update_time, remark from app_chinese_poetry
+    </sql>
+
+    <select id="selectAppChinesePoetryList" parameterType="AppChinesePoetry" resultMap="AppChinesePoetryResult">
+        <include refid="selectAppChinesePoetryVo"/>
+        <where>  
+            <if test="sysId != null "> and sys_id = #{sysId}</if>
+            <if test="grade != null "> and grade = #{grade}</if>
+            <if test="term != null "> and term = #{term}</if>
+            <if test="unit != null "> and unit = #{unit}</if>
+            <if test="categoryId != null  and categoryId != ''"> and category_id = #{categoryId}</if>
+            <if test="title != null  and title != ''"> and title like concat('%', #{title}, '%')</if>
+            <if test="dynasty != null  and dynasty != ''"> and dynasty like concat('%', #{dynasty}, '%')</if>
+            <if test="author != null  and author != ''"> and author like concat('%', #{author}, '%')</if>
+            <if test="content != null  and content != ''"> and content like concat('%', #{content}, '%')</if>
+            <if test="mustWrite != null "> and must_write = #{mustWrite}</if>
+            <if test="pinyin != null  and pinyin != ''"> and pinyin like concat('%', #{pinyin}, '%')</if>
+            <if test="comment != null  and comment != ''"> and comment like concat('%', #{comment}, '%')</if>
+            <if test="translation != null  and translation != ''"> and translation like concat('%', #{translation}, '%')</if>
+            <if test="childCategoryId != null  and childCategoryId != ''"> and child_category_id = #{childCategoryId}</if>
+            <if test="background != null  and background != ''"> and background like concat('%', #{background}, '%')</if>
+            <if test="emotion != null  and emotion != ''"> and emotion like concat('%', #{emotion}, '%')</if>
+            <if test="truth != null  and truth != ''"> and truth like concat('%', #{truth}, '%')</if>
+            <if test="wordSearch != null  and wordSearch != ''"> and word_search like concat('%', #{wordSearch}, '%')</if>
+            <if test="question != null  and question != ''"> and question like concat('%', #{question}, '%')</if>
+
+        </where>
+    </select>
+    
+    <select id="selectAppChinesePoetryById" parameterType="Long" resultMap="AppChinesePoetryResult">
+        <include refid="selectAppChinesePoetryVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAppChinesePoetry" parameterType="AppChinesePoetry" useGeneratedKeys="true" keyProperty="id">
+        insert into app_chinese_poetry
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sysId != null">sys_id,</if>
+            <if test="grade != null">grade,</if>
+            <if test="term != null">term,</if>
+            <if test="unit != null">unit,</if>
+            <if test="categoryId != null">category_id,</if>
+            <if test="title != null">title,</if>
+            <if test="dynasty != null">dynasty,</if>
+            <if test="author != null">author,</if>
+            <if test="content != null">content,</if>
+            <if test="mustWrite != null">must_write,</if>
+            <if test="pinyin != null">pinyin,</if>
+            <if test="comment != null">comment,</if>
+            <if test="translation != null">translation,</if>
+            <if test="childCategoryId != null">child_category_id,</if>
+            <if test="background != null">background,</if>
+            <if test="emotion != null">emotion,</if>
+            <if test="truth != null">truth,</if>
+            <if test="wordSearch != null">word_search,</if>
+            <if test="question != null">question,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sysId != null">#{sysId},</if>
+            <if test="grade != null">#{grade},</if>
+            <if test="term != null">#{term},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="categoryId != null">#{categoryId},</if>
+            <if test="title != null">#{title},</if>
+            <if test="dynasty != null">#{dynasty},</if>
+            <if test="author != null">#{author},</if>
+            <if test="content != null">#{content},</if>
+            <if test="mustWrite != null">#{mustWrite},</if>
+            <if test="pinyin != null">#{pinyin},</if>
+            <if test="comment != null">#{comment},</if>
+            <if test="translation != null">#{translation},</if>
+            <if test="childCategoryId != null">#{childCategoryId},</if>
+            <if test="background != null">#{background},</if>
+            <if test="emotion != null">#{emotion},</if>
+            <if test="truth != null">#{truth},</if>
+            <if test="wordSearch != null">#{wordSearch},</if>
+            <if test="question != null">#{question},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppChinesePoetry" parameterType="AppChinesePoetry">
+        update app_chinese_poetry
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sysId != null">sys_id = #{sysId},</if>
+            <if test="grade != null">grade = #{grade},</if>
+            <if test="term != null">term = #{term},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="categoryId != null">category_id = #{categoryId},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="dynasty != null">dynasty = #{dynasty},</if>
+            <if test="author != null">author = #{author},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="mustWrite != null">must_write = #{mustWrite},</if>
+            <if test="pinyin != null">pinyin = #{pinyin},</if>
+            <if test="comment != null">comment = #{comment},</if>
+            <if test="translation != null">translation = #{translation},</if>
+            <if test="childCategoryId != null">child_category_id = #{childCategoryId},</if>
+            <if test="background != null">background = #{background},</if>
+            <if test="emotion != null">emotion = #{emotion},</if>
+            <if test="truth != null">truth = #{truth},</if>
+            <if test="wordSearch != null">word_search = #{wordSearch},</if>
+            <if test="question != null">question = #{question},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppChinesePoetryById" parameterType="Long">
+        delete from app_chinese_poetry where id = #{id}
+    </delete>
+
+    <delete id="deleteAppChinesePoetryByIds" parameterType="String">
+        delete from app_chinese_poetry where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

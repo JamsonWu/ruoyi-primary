@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppMathsConceptMapper">
+    
+    <resultMap type="AppMathsConcept" id="AppMathsConceptResult">
+        <result property="id"    column="id"    />
+        <result property="grade"    column="grade"    />
+        <result property="term"    column="term"    />
+        <result property="chapterId"    column="chapter_id"    />
+        <result property="sectionTitle"    column="section_title"    />
+        <result property="concept"    column="concept"    />
+        <result property="expression"    column="expression"    />
+        <result property="sample"    column="sample"    />
+        <result property="answer"    column="answer"    />
+        <result property="diffStar"    column="diff_star"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="sortNo"    column="sort_no"    />
+    </resultMap>
+
+    <sql id="selectAppMathsConceptVo">
+        select id, grade, term, chapter_id, section_title, concept, expression, sample, answer, diff_star, create_by, create_time, update_by, update_time, remark, sort_no from app_maths_concept
+    </sql>
+
+    <select id="selectAppMathsConceptList" parameterType="AppMathsConcept" resultMap="AppMathsConceptResult">
+        <include refid="selectAppMathsConceptVo"/>
+        <where>  
+            <if test="grade != null "> and grade = #{grade}</if>
+            <if test="term != null "> and term = #{term}</if>
+            <if test="chapterId != null "> and chapter_id = #{chapterId}</if>
+            <if test="sectionTitle != null  and sectionTitle != ''"> and section_title like concat('%', #{sectionTitle}, '%')</if>
+            <if test="concept != null  and concept != ''"> and concept like concat('%', #{concept}, '%')</if>
+            <if test="expression != null  and expression != ''"> and expression like concat('%', #{expression}, '%')</if>
+            <if test="sample != null  and sample != ''"> and sample like concat('%', #{sample}, '%')</if>
+            <if test="answer != null  and answer != ''"> and answer like concat('%', #{answer}, '%')</if>
+            <if test="diffStar != null "> and diff_star = #{diffStar}</if>
+            <if test="sortNo != null "> and sort_no = #{sortNo}</if>
+        </where>
+    </select>
+    
+    <select id="selectAppMathsConceptById" parameterType="Long" resultMap="AppMathsConceptResult">
+        <include refid="selectAppMathsConceptVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAppMathsConcept" parameterType="AppMathsConcept" useGeneratedKeys="true" keyProperty="id">
+        insert into app_maths_concept
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="grade != null">grade,</if>
+            <if test="term != null">term,</if>
+            <if test="chapterId != null">chapter_id,</if>
+            <if test="sectionTitle != null and sectionTitle != ''">section_title,</if>
+            <if test="concept != null and concept != ''">concept,</if>
+            <if test="expression != null">expression,</if>
+            <if test="sample != null">sample,</if>
+            <if test="answer != null">answer,</if>
+            <if test="diffStar != null">diff_star,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="sortNo != null">sort_no,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="grade != null">#{grade},</if>
+            <if test="term != null">#{term},</if>
+            <if test="chapterId != null">#{chapterId},</if>
+            <if test="sectionTitle != null and sectionTitle != ''">#{sectionTitle},</if>
+            <if test="concept != null and concept != ''">#{concept},</if>
+            <if test="expression != null">#{expression},</if>
+            <if test="sample != null">#{sample},</if>
+            <if test="answer != null">#{answer},</if>
+            <if test="diffStar != null">#{diffStar},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="sortNo != null">#{sortNo},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppMathsConcept" parameterType="AppMathsConcept">
+        update app_maths_concept
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="grade != null">grade = #{grade},</if>
+            <if test="term != null">term = #{term},</if>
+            <if test="chapterId != null">chapter_id = #{chapterId},</if>
+            <if test="sectionTitle != null and sectionTitle != ''">section_title = #{sectionTitle},</if>
+            <if test="concept != null and concept != ''">concept = #{concept},</if>
+            <if test="expression != null">expression = #{expression},</if>
+            <if test="sample != null">sample = #{sample},</if>
+            <if test="answer != null">answer = #{answer},</if>
+            <if test="diffStar != null">diff_star = #{diffStar},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="sortNo != null">sort_no = #{sortNo},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppMathsConceptById" parameterType="Long">
+        delete from app_maths_concept where id = #{id}
+    </delete>
+
+    <delete id="deleteAppMathsConceptByIds" parameterType="String">
+        delete from app_maths_concept where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

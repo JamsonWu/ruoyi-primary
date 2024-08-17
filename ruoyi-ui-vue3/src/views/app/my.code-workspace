@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../ui-examples-main"
+		},
+		{
+			"path": "../../../../app/primary-app"
+		},
+		{
+			"path": "../../.."
+		},
+		{
+			"path": "../../../../../gluestack-ui-main"
+		},
+		{
+			"path": "../../../../../../bigscreen-master/bigscreen-master"
+		}
+	],
+	"settings": {}
+}
