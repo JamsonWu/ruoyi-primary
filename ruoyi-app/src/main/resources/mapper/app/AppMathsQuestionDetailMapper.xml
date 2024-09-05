@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppMathsQuestionDetailMapper">
+    
+    <resultMap type="AppMathsQuestionDetail" id="AppMathsQuestionDetailResult">
+        <result property="id"    column="id"    />
+        <result property="grade"    column="grade"    />
+        <result property="term"    column="term"    />
+        <result property="unit"    column="unit"    />
+        <result property="questionType"    column="question_type"    />
+        <result property="question"    column="question"    />
+        <result property="answer"    column="answer"    />
+        <result property="errorTimes"    column="error_times"    />
+        <result property="lastErrorDate"    column="last_error_date"    />
+        <result property="userId"    column="user_id"    />
+    </resultMap>
+
+    <sql id="selectAppMathsQuestionDetailVo">
+        select id, grade, term, unit, question_type, question, answer, error_times, last_error_date, user_id from app_maths_question_detail
+    </sql>
+
+    <select id="selectAppMathsQuestionDetailList" parameterType="AppMathsQuestionDetail" resultMap="AppMathsQuestionDetailResult">
+        <include refid="selectAppMathsQuestionDetailVo"/>
+        <where>  
+            <if test="grade != null "> and grade = #{grade}</if>
+            <if test="term != null "> and term = #{term}</if>
+            <if test="unit != null "> and unit = #{unit}</if>
+            <if test="questionType != null "> and question_type = #{questionType}</if>
+            <if test="question != null  and question != ''"> and question like concat('%', #{question}, '%')</if>
+            <if test="errorTimes != null "> and error_times &gt;= #{errorTimes}</if>
+            <if test="params.beginLastErrorDate != null and params.beginLastErrorDate != '' and params.endLastErrorDate != null and params.endLastErrorDate != ''"> and last_error_date between #{params.beginLastErrorDate} and #{params.endLastErrorDate}</if>
+        </where>
+    </select>
+    
+    <select id="selectAppMathsQuestionDetailById" parameterType="Long" resultMap="AppMathsQuestionDetailResult">
+        <include refid="selectAppMathsQuestionDetailVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAppMathsQuestionDetail" parameterType="AppMathsQuestionDetail">
+        insert into app_maths_question_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="grade != null">grade,</if>
+            <if test="term != null">term,</if>
+            <if test="unit != null">unit,</if>
+            <if test="questionType != null">question_type,</if>
+            <if test="question != null and question != ''">question,</if>
+            <if test="answer != null">answer,</if>
+            <if test="errorTimes != null">error_times,</if>
+            <if test="lastErrorDate != null">last_error_date,</if>
+            <if test="userId != null">user_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="grade != null">#{grade},</if>
+            <if test="term != null">#{term},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="questionType != null">#{questionType},</if>
+            <if test="question != null and question != ''">#{question},</if>
+            <if test="answer != null">#{answer},</if>
+            <if test="errorTimes != null">#{errorTimes},</if>
+            <if test="lastErrorDate != null">#{lastErrorDate},</if>
+            <if test="userId != null">#{userId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppMathsQuestionDetail" parameterType="AppMathsQuestionDetail">
+        update app_maths_question_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="grade != null">grade = #{grade},</if>
+            <if test="term != null">term = #{term},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="questionType != null">question_type = #{questionType},</if>
+            <if test="question != null and question != ''">question = #{question},</if>
+            <if test="answer != null">answer = #{answer},</if>
+            <if test="errorTimes != null">error_times = #{errorTimes},</if>
+            <if test="lastErrorDate != null">last_error_date = #{lastErrorDate},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppMathsQuestionDetailById" parameterType="Long">
+        delete from app_maths_question_detail where id = #{id}
+    </delete>
+
+    <delete id="deleteAppMathsQuestionDetailByIds" parameterType="String">
+        delete from app_maths_question_detail where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
