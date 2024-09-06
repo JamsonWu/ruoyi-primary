@@ -1,21 +1,13 @@
 <template>
   <div class="user-info-head" @click="editCropper()">
-    <img :src="options.img" title="点击上传头像" class="img-circle img-lg" />
+    <img v-if="answerImgUrl" :src="answerImgUrl" title="点击上传图片" class=" img-lg" />
+    <img v-else src="@/assets/images/empty.png" title="点击上传图片" class=" img-lg" />
     <el-dialog :title="title" v-model="open" width="800px" append-to-body @opened="modalOpened" @close="closeDialog">
       <el-row>
         <el-col :xs="24" :md="12" :style="{ height: '350px' }">
-          <vue-cropper
-            ref="cropper"
-            :img="options.img"
-            :info="true"
-            :autoCrop="options.autoCrop"
-            :autoCropWidth="options.autoCropWidth"
-            :autoCropHeight="options.autoCropHeight"
-            :fixedBox="options.fixedBox"
-            :outputType="options.outputType"
-            @realTime="realTime"
-            v-if="visible"
-          />
+          <vue-cropper ref="cropper" :img="options.img" :info="true" :autoCrop="options.autoCrop"
+            :autoCropWidth="options.autoCropWidth" :autoCropHeight="options.autoCropHeight" :fixedBox="options.fixedBox"
+            :outputType="options.outputType" @realTime="realTime" v-if="visible" />
         </el-col>
         <el-col :xs="24" :md="12" :style="{ height: '350px' }">
           <div class="avatar-upload-preview">
@@ -26,15 +18,12 @@
       <br />
       <el-row>
         <el-col :lg="2" :md="2">
-          <el-upload
-            action="#"
-            :http-request="requestUpload"
-            :show-file-list="false"
-            :before-upload="beforeUpload"
-          >
+          <el-upload action="#" :http-request="requestUpload" :show-file-list="false" :before-upload="beforeUpload">
             <el-button>
               选择
-              <el-icon class="el-icon--right"><Upload /></el-icon>
+              <el-icon class="el-icon--right">
+                <Upload />
+              </el-icon>
             </el-button>
           </el-upload>
         </el-col>
@@ -61,22 +50,27 @@
 <script setup>
 import "vue-cropper/dist/index.css";
 import { VueCropper } from "vue-cropper";
-import { uploadAvatar } from "@/api/system/user";
-import useUserStore from "@/store/modules/user";
-
-const userStore = useUserStore();
+import { uploadAnswer} from "@/api/app/maths/question";
+const props = defineProps({
+  answerImgUrl: {
+    type: String
+  },
+  onAnswerImgUrl: {
+    type: Function,
+    required: true
+  }
+});
 const { proxy } = getCurrentInstance();
-
 const open = ref(false);
 const visible = ref(false);
-const title = ref("修改头像");
+const title = ref("上传图片");
 
 //图片裁剪数据
 const options = reactive({
-  img: userStore.avatar, // 裁剪图片的地址
+  img: "", // 裁剪图片的地址
   autoCrop: true, // 是否默认生成截图框
-  autoCropWidth: 200, // 默认生成截图框宽度
-  autoCropHeight: 200, // 默认生成截图框高度
+  autoCropWidth: 300, // 默认生成截图框宽度
+  autoCropHeight: 300, // 默认生成截图框高度
   fixedBox: false, // 固定截图框大小 不允许改变
   outputType: "png", // 默认生成截图为PNG格式
   previews: {} //预览数据
@@ -84,6 +78,7 @@ const options = reactive({
 
 /** 编辑头像 */
 function editCropper() {
+  options.img = props.answerImgUrl
   open.value = true;
 }
 /** 打开弹出层结束时的回调 */
@@ -91,7 +86,7 @@ function modalOpened() {
   visible.value = true;
 }
 /** 覆盖默认上传行为 */
-function requestUpload() {}
+function requestUpload() { }
 /** 向左旋转 */
 function rotateLeft() {
   proxy.$refs.cropper.rotateLeft();
@@ -119,18 +114,15 @@ function beforeUpload(file) {
 }
 /** 上传图片 */
 function uploadImg() {
-  proxy.$refs.cropper.getCropData(data => {
-  //  console.log("base64",data);
-  })
   proxy.$refs.cropper.getCropBlob(data => {
     console.log("uploadImg",data);
     let formData = new FormData();
-    formData.append("avatarfile", data);
-    uploadAvatar(formData).then(response => {
+    formData.append("answerfile", data);
+    uploadAnswer(formData).then(response => {
       open.value = false;
       options.img = import.meta.env.VITE_APP_BASE_API + response.imgUrl;
-      userStore.avatar = options.img;
-      proxy.$modal.msgSuccess("修改成功");
+      props.onAnswerImgUrl(response.imgUrl)
+      proxy.$modal.msgSuccess("上传成功");
       visible.value = false;
     });
   });
@@ -141,8 +133,9 @@ function realTime(data) {
 }
 /** 关闭窗口 */
 function closeDialog() {
-  options.img = userStore.avatar;
-  options.visible = false;
+  // options.img = userStore.avatar;
+  open.value = false
+  visible.value = false;
 }
 </script>
 
@@ -154,7 +147,7 @@ function closeDialog() {
 }
 
 .user-info-head:hover:after {
-  content: "+";
+  content: "";
   position: absolute;
   left: 0;
   right: 0;
@@ -168,6 +161,11 @@ function closeDialog() {
   -moz-osx-font-smoothing: grayscale;
   cursor: pointer;
   line-height: 110px;
-  border-radius: 50%;
+  //border-radius: 50%;
+}
+::v-deep .avatar-upload-preview {
+  // width: 300px;
+  // height: 300px;
+  // border-radius: 0;
 }
 </style>

@@ -42,3 +42,12 @@ export function delQuestion(id) {
     method: 'delete'
   })
 }
+
+// 数学问题解答上传
+export function uploadAnswer(data) {
+  return request({
+    url: '/maths/question/answer',
+    method: 'post',
+    data: data
+  })
+}

@@ -9,7 +9,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 数学错题主对象 app_maths_question
  * 
  * @author ruoyi
- * @date 2024-09-05
+ * @date 2024-09-06
  */
 public class AppMathsQuestion extends BaseEntity
 {
@@ -59,7 +59,12 @@ public class AppMathsQuestion extends BaseEntity
     private Long sortNo;
 
     /** 用户ID */
+    @Excel(name = "用户ID")
     private Long userId;
+
+    /** 解答图片 */
+    @Excel(name = "解答图片")
+    private String answerImgUrl;
 
     public void setId(Long id) 
     {
@@ -169,6 +174,15 @@ public class AppMathsQuestion extends BaseEntity
     {
         return userId;
     }
+    public void setAnswerImgUrl(String answerImgUrl) 
+    {
+        this.answerImgUrl = answerImgUrl;
+    }
+
+    public String getAnswerImgUrl() 
+    {
+        return answerImgUrl;
+    }
 
     @Override
     public String toString() {
@@ -185,6 +199,7 @@ public class AppMathsQuestion extends BaseEntity
             .append("errorTimes", getErrorTimes())
             .append("sortNo", getSortNo())
             .append("userId", getUserId())
+            .append("answerImgUrl", getAnswerImgUrl())
             .toString();
     }
 }

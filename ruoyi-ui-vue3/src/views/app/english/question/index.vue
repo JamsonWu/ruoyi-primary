@@ -2,66 +2,37 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="年级" prop="grade">
-        <el-select v-model="queryParams.grade" placeholder="请选择年级" clearable  style="width: 240px">
-          <el-option
-            v-for="dict in app_primary_grade"
-            :key="dict.value"
-            :label="dict.label"
-            :value="dict.value"
-          />
+        <el-select v-model="queryParams.grade" placeholder="请选择年级" clearable style="width: 240px">
+          <el-option v-for="dict in app_primary_grade" :key="dict.value" :label="dict.label" :value="dict.value" />
         </el-select>
       </el-form-item>
       <el-form-item label="学期" prop="term">
-        <el-select v-model="queryParams.term" placeholder="请选择学期" clearable  style="width: 240px">
-          <el-option
-            v-for="dict in app_term"
-            :key="dict.value"
-            :label="dict.label"
-            :value="dict.value"
-          />
+        <el-select v-model="queryParams.term" placeholder="请选择学期" clearable style="width: 240px">
+          <el-option v-for="dict in app_term" :key="dict.value" :label="dict.label" :value="dict.value" />
         </el-select>
       </el-form-item>
       <el-form-item label="单元" prop="unit">
-        <el-select v-model="queryParams.unit" placeholder="请选择单元" clearable  style="width: 240px">
-          <el-option
-            v-for="dict in app_lesson_unit"
-            :key="dict.value"
-            :label="dict.label"
-            :value="dict.value"
-          />
+        <el-select v-model="queryParams.unit" placeholder="请选择单元" clearable style="width: 240px">
+          <el-option v-for="dict in app_lesson_unit" :key="dict.value" :label="dict.label" :value="dict.value" />
         </el-select>
       </el-form-item>
       <el-form-item label="问题类别" prop="questionType">
-        <el-select v-model="queryParams.questionType" placeholder="请选择问题类别" clearable  style="width: 240px">
-          <el-option
-            v-for="dict in app_english_question_type"
-            :key="dict.value"
-            :label="dict.label"
-            :value="dict.value"
-          />
+        <el-select v-model="queryParams.questionType" placeholder="请选择问题类别" clearable style="width: 240px">
+          <el-option v-for="dict in app_english_question_type" :key="dict.value" :label="dict.label"
+            :value="dict.value" />
         </el-select>
       </el-form-item>
       <el-form-item label="提交日期">
         <el-date-picker v-model="daterangeQuestionDate" value-format="YYYY-MM-DD" type="daterange" range-separator="-"
-        start-placeholder="开始日期" end-placeholder="结束日期" style="width: 240px"></el-date-picker>
+          start-placeholder="开始日期" end-placeholder="结束日期" style="width: 240px"></el-date-picker>
       </el-form-item>
       <el-form-item label="问题" prop="quetion">
-        <el-input
-          v-model="queryParams.quetion"
-          placeholder="请输入问题"
-          clearable
-          @keyup.enter.native="handleQuery"
-           style="width: 240px"
-        />
+        <el-input v-model="queryParams.quetion" placeholder="请输入问题" clearable @keyup.enter.native="handleQuery"
+          style="width: 240px" />
       </el-form-item>
       <el-form-item label="错解次数" prop="errorTimes">
-        <el-input
-          v-model="queryParams.errorTimes"
-          placeholder="请输入错解次数"
-          clearable
-          @keyup.enter.native="handleQuery"
-           style="width: 240px"
-        />
+        <el-input v-model="queryParams.errorTimes" placeholder="请输入错解次数" clearable @keyup.enter.native="handleQuery"
+          style="width: 240px" />
       </el-form-item>
 
       <el-form-item>
@@ -72,46 +43,20 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['english:question:add']"
-        >新增</el-button>
+        <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
+          v-hasPermi="['english:question:add']">新增</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['english:question:edit']"
-        >修改</el-button>
+        <el-button type="success" plain icon="el-icon-edit" size="mini" :disabled="single" @click="handleUpdate"
+          v-hasPermi="['english:question:edit']">修改</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['english:question:remove']"
-        >删除</el-button>
+        <el-button type="danger" plain icon="el-icon-delete" size="mini" :disabled="multiple" @click="handleDelete"
+          v-hasPermi="['english:question:remove']">删除</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['english:question:export']"
-        >导出</el-button>
+        <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport"
+          v-hasPermi="['english:question:export']">导出</el-button>
       </el-col>
       <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -126,7 +71,7 @@
       </el-table-column>
       <el-table-column label="问题类别" align="center" prop="questionType">
         <template #default="scope">
-          <dict-tag :options="app_english_question_type" :value="scope.row.questionType"/>
+          <dict-tag :options="app_english_question_type" :value="scope.row.questionType" />
         </template>
       </el-table-column>
       <el-table-column label="提交日期" align="center" prop="questionDate" width="180">
@@ -135,76 +80,64 @@
         </template>
       </el-table-column>
       <el-table-column label="问题" align="center" prop="quetion" />
+      <el-table-column label="错解" align="center" prop="errorAnswer" />
+      <el-table-column label="正解" align="center" prop="answer" />
       <el-table-column label="错解次数" align="center" prop="errorTimes" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['english:question:edit']"
-          >修改</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
+            v-hasPermi="['english:question:edit']">修改</el-button>
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum"
       v-model:limit="queryParams.pageSize" @pagination="getList" />
     <!-- 添加或修改英语错题主对话框 -->
-    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="660px" :close-on-click-modal="false" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="年级" prop="grade">
-          <el-select v-model="form.grade" placeholder="请选择年级">
-            <el-option
-              v-for="dict in app_primary_grade"
-              :key="dict.value"
-              :label="dict.label"
-              :value="parseInt(dict.value)"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="学期" prop="term">
-          <el-select v-model="form.term" placeholder="请选择学期">
-            <el-option
-              v-for="dict in app_term"
-              :key="dict.value"
-              :label="dict.label"
-              :value="parseInt(dict.value)"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="单元" prop="unit">
-          <el-select v-model="form.unit" placeholder="请选择单元">
-            <el-option
-              v-for="dict in app_lesson_unit"
-              :key="dict.value"
-              :label="dict.label"
-              :value="parseInt(dict.value)"
-            ></el-option>
-          </el-select>
-        </el-form-item>
+        <el-row :gutter="5">
+          <el-col :span="8">
+            <el-form-item label="年级" prop="grade">
+              <el-select v-model="form.grade" placeholder="请选择年级">
+                <el-option v-for="dict in app_primary_grade" :key="dict.value" :label="dict.label"
+                  :value="parseInt(dict.value)"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="学期" prop="term">
+              <el-select v-model="form.term" placeholder="请选择学期">
+                <el-option v-for="dict in app_term" :key="dict.value" :label="dict.label"
+                  :value="parseInt(dict.value)"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="单元" prop="unit">
+              <el-select v-model="form.unit" placeholder="请选择单元">
+                <el-option v-for="dict in app_lesson_unit" :key="dict.value" :label="dict.label"
+                  :value="parseInt(dict.value)"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
         <el-form-item label="问题类别" prop="questionType">
           <el-select v-model="form.questionType" placeholder="请选择问题类别">
-            <el-option
-              v-for="dict in app_english_question_type"
-              :key="dict.value"
-              :label="dict.label"
-              :value="parseInt(dict.value)"
-            ></el-option>
+            <el-option v-for="dict in app_english_question_type" :key="dict.value" :label="dict.label"
+              :value="parseInt(dict.value)"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="问题" prop="quetion">
-          <el-input v-model="form.quetion" placeholder="请输入问题" />
+          <el-input v-model="form.quetion" type="textarea" placeholder="请输入问题" :rows="5" />
         </el-form-item>
         <el-form-item label="错解" prop="errorAnswer">
-          <el-input v-model="form.errorAnswer" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.errorAnswer" type="textarea" placeholder="请输入内容" :rows="5" />
         </el-form-item>
         <el-form-item label="正确" prop="answer">
-          <el-input v-model="form.answer" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.answer" type="textarea" placeholder="请输入内容" :rows="5" />
         </el-form-item>
-
-
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -347,7 +280,7 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
@@ -389,12 +322,12 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除英语错题主编号为"' + ids + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除英语错题主编号为"' + ids + '"的数据项？').then(function () {
         return delQuestion(ids);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      }).catch(() => { });
     },
     /** 导出按钮操作 */
     handleExport() {

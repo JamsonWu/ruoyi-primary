@@ -7,7 +7,7 @@ import com.ruoyi.app.domain.AppMathsQuestion;
  * 数学错题主Mapper接口
  * 
  * @author ruoyi
- * @date 2024-09-05
+ * @date 2024-09-06
  */
 public interface AppMathsQuestionMapper 
 {

@@ -78,6 +78,8 @@
         </template>
       </el-table-column>
       <el-table-column label="问题" align="center" prop="quetion" />
+      <el-table-column label="错解" align="center" prop="errorAnswer" />
+      <el-table-column label="正解" align="center" prop="answer" />
       <el-table-column label="错解次数" align="center" prop="errorTimes" />
 
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -92,40 +94,56 @@
       v-model:limit="queryParams.pageSize" @pagination="getList" />
 
     <!-- 添加或修改数学错题主对话框 -->
-    <el-dialog :title="title" v-model="open" width="600px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="660px" append-to-body :close-on-click-modal="false">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="年级" prop="grade">
-          <el-select v-model="form.grade" placeholder="请选择年级">
-            <el-option v-for="dict in app_primary_grade" :key="dict.value" :label="dict.label"
-              :value="parseInt(dict.value)"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="学期" prop="term">
-          <el-select v-model="form.term" placeholder="请选择学期">
-            <el-option v-for="dict in app_term" :key="dict.value" :label="dict.label"
-              :value="parseInt(dict.value)"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="单元" prop="unit">
-          <el-select v-model="form.unit" placeholder="请选择单元">
-            <el-option v-for="dict in app_lesson_unit" :key="dict.value" :label="dict.label"
-              :value="parseInt(dict.value)"></el-option>
-          </el-select>
-        </el-form-item>
+        <el-row :gutter="5">
+          <el-col :span="8">
+            <el-form-item label="年级" prop="grade">
+              <el-select v-model="form.grade" placeholder="请选择年级">
+                <el-option v-for="dict in app_primary_grade" :key="dict.value" :label="dict.label"
+                  :value="parseInt(dict.value)"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="8">
+            <el-form-item label="学期" prop="term">
+              <el-select v-model="form.term" placeholder="请选择学期">
+                <el-option v-for="dict in app_term" :key="dict.value" :label="dict.label"
+                  :value="parseInt(dict.value)"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="单元" prop="unit">
+              <el-select v-model="form.unit" placeholder="请选择单元">
+                <el-option v-for="dict in app_lesson_unit" :key="dict.value" :label="dict.label"
+                  :value="parseInt(dict.value)"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-form-item label="问题类别" prop="questionType">
           <el-select v-model="form.questionType" placeholder="请选择问题类别">
             <el-option v-for="dict in sys_maths_question" :key="dict.value" :label="dict.label"
               :value="parseInt(dict.value)"></el-option>
           </el-select>
         </el-form-item>
+
         <el-form-item label="问题" prop="quetion">
-          <el-input v-model="form.quetion" type="textarea" placeholder="请输入问题" :rows="3" />
+          <el-input v-model="form.quetion" type="textarea" placeholder="请输入问题" :rows="5" />
         </el-form-item>
+
         <el-form-item label="错解" prop="errorAnswer">
           <el-input v-model="form.errorAnswer" type="textarea" placeholder="请输入内容" :rows="6" />
         </el-form-item>
+
         <el-form-item label="正确" prop="answer">
           <el-input v-model="form.answer" type="textarea" placeholder="请输入内容" :rows="6" />
+        </el-form-item>
+
+        <el-form-item label="拍照解答">
+          <question-img :answerImgUrl="currentAnswerImgUrl" :onAnswerImgUrl="handleAnswerImgUrl" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -140,9 +158,13 @@
 import { listQuestion, getQuestion, delQuestion, addQuestion, updateQuestion } from "@/api/app/maths/question";
 
 import AppBase from "../../app";
+import QuestionImg from "./questionImg";
 export default {
   mixins: [AppBase],
   name: "Question",
+  components: {
+    QuestionImg
+  },
   data() {
     return {
       // 遮罩层
@@ -179,7 +201,8 @@ export default {
         answer: null,
         errorTimes: null,
         sortNo: null,
-        userId: null
+        userId: null,
+        answerImgUrl: null
       },
       // 表单参数
       form: {},
@@ -212,6 +235,14 @@ export default {
       app_lesson_unit: [],
       sys_maths_question: []
     };
+  },
+  computed:{
+     currentAnswerImgUrl(){
+       var tmpStr = this.form.answerImgUrl ? import.meta.env.VITE_APP_BASE_API + this.form.answerImgUrl :""
+       console.log("currentAnswerImgUrl", tmpStr);
+       
+       return tmpStr
+     }
   },
   created() {
     this.getList();
@@ -251,7 +282,8 @@ export default {
         answer: null,
         errorTimes: null,
         sortNo: null,
-        userId: null
+        userId: null,
+        answerImgUrl: null
       };
       this.resetForm("form");
     },
@@ -323,7 +355,17 @@ export default {
       this.download('maths/question/export', {
         ...this.queryParams
       }, `question_${new Date().getTime()}.xlsx`)
+    },
+    handleAnswerImgUrl(url){
+     this.form.answerImgUrl = url
     }
   }
 };
 </script>
+<style lang="css" scoped>
+/* ::v-deep .el-col-6 {
+     max-width: none;
+     flex: none;
+
+   } */
+</style>

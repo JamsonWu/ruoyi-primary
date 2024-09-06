@@ -118,6 +118,14 @@ public class RuoYiConfig
     }
 
     /**
+     * 获取数学问题答案上传路径
+     */
+    public static String getMathsQuestionAnswerPath()
+    {
+        return getProfile() + "/maths/question/answer";
+    }
+
+    /**
      * 获取下载路径
      */
     public static String getDownloadPath()
